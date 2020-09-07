@@ -1,0 +1,6 @@
+# Project exclude paths
+/node_modules/
+/package-lock.json
+/.env
+/log.txt
+/Dockerfile
