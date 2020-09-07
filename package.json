@@ -1,0 +1,32 @@
+{
+  "name": "ed-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "lint": "eslint --ignore-path .gitignore .",
+    "fix-lint": "eslint --fix --ignore-path .gitignore .",
+    "test": "mocha ./test/* --exit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BANTYC/ed-backend.git"
+  },
+  "author": "Roman Daneliya <rdaneliya@yandex.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BANTYC/ed-backend/issues"
+  },
+  "homepage": "https://github.com/BANTYC/ed-backend#readme",
+  "dependencies": {
+    "conf": "^7.1.2",
+    "dotenv": "^8.2.0",
+    "log4js": "^6.3.0",
+    "mongoose": "^5.10.2",
+    "zeromq": "^5.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.8.1"
+  }
+}
