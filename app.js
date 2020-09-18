@@ -2,13 +2,6 @@ const zlib = require('zlib');
 const zmq = require('zeromq');
 const sock = zmq.socket('sub');
 const Station = require('./models/station');
-const log4js = require('log4js');
-
-log4js.configure({
-  appenders: { log: { type: 'file', filename: 'log.txt' } },
-  categories: { default: { appenders: ['log'], level: 'trace' } }
-});
-const logger = log4js.getLogger('log');
 
 sock.connect('tcp://eddn.edcd.io:9500');
 console.log('Worker connected to port 9500');
@@ -24,22 +17,22 @@ sock.on('message', topic => {
       .then(info => {
         if(info == null) {
           Station.save(message)
-            .catch(err => logger.error(err))
+            .catch(err => console.log(err))
 
             .finally(err => {
               if(!err)
-                logger.info('successfully SAVED new station');
+                console.log('successfully SAVED new station');
             });
         } else {
           Station.update(message)
-            .catch(err => logger.error(err))
+            .catch(err => console.log(err))
 
             .finally(err => {
               if(!err)
-                logger.info('successfully UPDATED station');
+                console.log('successfully UPDATED station');
             });
         }
       })
-      .catch(err => logger.error(err));
+      .catch(err => console.log(err));
   }
 });
