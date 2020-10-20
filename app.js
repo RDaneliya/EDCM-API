@@ -4,8 +4,8 @@ const sock = zmq.socket('sub');
 const Station = require('./models/station');
 
 const stationNames = new Set();
-Station.getAllStationsNames().then(allStaionDocs => {
-  allStaionDocs.map(doc => stationNames.add(doc._doc.stationName));
+Station.getAllStationsNames().then(allStationsDocs => {
+  allStationsDocs.map(doc => stationNames.add(doc._doc.stationName));
 
   sock.connect('tcp://eddn.edcd.io:9500');
   console.log('Worker connected to port 9500');
