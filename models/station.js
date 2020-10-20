@@ -31,6 +31,10 @@ const schema = new Schema({
 
 const Station = mongoose.model('Station', schema);
 
+module.exports.getAllStationsNames = () => {
+  return Station.find({}, { 'stationName': 1 });
+};
+
 module.exports.haveInfo = (stationName) => {
   return Station.findOne({ stationName: stationName });
 };
