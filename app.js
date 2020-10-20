@@ -17,10 +17,19 @@ Station.getAllStationsNames().then(allStationsDocs => {
 
       if(!stationNames.has(message.stationName)) {
         Station.save(message)
-          .catch(err => console.log(err));
+          .catch(err => {
+              console.log(new Date().toUTCString());
+              console.log(err);
+            }
+          );
+        stationNames.add(message.stationName);
       } else {
         Station.update(message)
-          .catch(err => console.log(err));
+          .catch(err => {
+              console.log(new Date().toUTCString());
+              console.log(err);
+            }
+          );
       }
     }
   });
