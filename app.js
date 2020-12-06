@@ -4,6 +4,8 @@ const sock = zmq.socket('sub');
 const Station = require('./models/station');
 const schedule = require('node-schedule');
 
+const address = 'tcp://eddn.edcd.io:9500';
+
 schedule.scheduleJob('0 0 * * *', () => {
   console.log(process.memoryUsage().heapUsed / 1024 / 1024);
 });
@@ -12,8 +14,8 @@ const stationNames = new Set();
 Station.getAllStationsNames().then(allStationsDocs => {
   allStationsDocs.map(doc => stationNames.add(doc._doc.stationName));
 
-  sock.connect('tcp://eddn.edcd.io:9500');
-  console.log('Worker connected to port 9500');
+  sock.connect(address);
+  console.log(`Worker connected to ${address}`);
   sock.subscribe('');
 
   sock.on('message', topic => {
@@ -28,5 +30,10 @@ Station.getAllStationsNames().then(allStationsDocs => {
         Station.update(message);
       }
     }
+  });
+
+  sock.on('disconnect', () => {
+    sock.connect('tcp://eddn.edcd.io:9500');
+    console.log('Disconnected, trying to reconnect');
   });
 });
