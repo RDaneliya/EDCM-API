@@ -6,11 +6,11 @@ require('dotenv').config();
 const connection = mongoose.connection;
 
 connection.on('connecting', () => {
-  console.log('Connecting');
+  console.log('Connecting to MongoDB');
 });
 
 connection.on('connected', () => {
-  console.log('Connected');
+  console.log('Connected to MongoDB');
 });
 
 connection.on('error', (err) => {

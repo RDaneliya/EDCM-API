@@ -22,20 +22,10 @@ Station.getAllStationsNames().then(allStationsDocs => {
       const message = inflated.message;
 
       if(!stationNames.has(message.stationName)) {
-        Station.save(message)
-          .catch(err => {
-              console.log(new Date().toUTCString());
-              console.log(err);
-            }
-          );
+        Station.save(message);
         stationNames.add(message.stationName);
       } else {
-        Station.update(message)
-          .catch(err => {
-              console.log(new Date().toUTCString());
-              console.log(err);
-            }
-          );
+        Station.update(message);
       }
     }
   });
