@@ -1,8 +1,8 @@
-const zlib = require('zlib');
 const zmq = require('zeromq');
 const sock = zmq.socket('sub');
-const Station = require('./models/station');
 const schedule = require('node-schedule');
+const Station = require('./models/station');
+const socketEvents = require('./events/socketEvents');
 
 const address = 'tcp://eddn.edcd.io:9500';
 
@@ -18,22 +18,6 @@ Station.getAllStationsNames().then(allStationsDocs => {
   console.log(`Worker connected to ${address}`);
   sock.subscribe('');
 
-  sock.on('message', topic => {
-    const inflated = JSON.parse(zlib.inflateSync(topic));
-    if(inflated.$schemaRef === 'https://eddn.edcd.io/schemas/commodity/3') {
-      const message = inflated.message;
-
-      if(!stationNames.has(message.stationName)) {
-        Station.save(message);
-        stationNames.add(message.stationName);
-      } else {
-        Station.update(message);
-      }
-    }
-  });
-
-  sock.on('disconnect', () => {
-    sock.connect('tcp://eddn.edcd.io:9500');
-    console.log('Disconnected, trying to reconnect');
-  });
+  socketEvents.setDisconnectEvent(sock);
+  socketEvents.setMessageEvent(sock, stationNames);
 });
