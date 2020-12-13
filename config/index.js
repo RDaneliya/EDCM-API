@@ -3,7 +3,7 @@ const Conf = require('conf');
 const config = new Conf();
 
 config.set({
-  'mongoose':{
+  'mongoose': {
     'options': {
       'useNewUrlParser': true,
       'useUnifiedTopology': true,
