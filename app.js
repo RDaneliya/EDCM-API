@@ -3,6 +3,7 @@ const sock = zmq.socket('sub');
 const schedule = require('node-schedule');
 const Station = require('./models/station');
 const socketEvents = require('./events/socketEvents');
+require('console-stamp')(console, '[HH:MM:ss.l]')
 
 const address = 'tcp://eddn.edcd.io:9500';
 
