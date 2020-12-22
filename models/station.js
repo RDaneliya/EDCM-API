@@ -39,17 +39,17 @@ module.exports.haveInfo = (stationName) => {
   return Station.findOne({ stationName: stationName });
 };
 
-module.exports.save = (station) => {
+module.exports.save = (data) => {
   const stationEntry = new Station({
-    commodities: station.commodities,
-    stationName: station.stationName,
-    systemName: station.systemName,
-    timestamp: station.timestamp
+    commodities: data.commodities,
+    stationName: data.stationName,
+    systemName: data.systemName,
+    timestamp: data.timestamp
   });
   return stationEntry.save();
 };
 
-module.exports.update = (station) => {
-  return Station.updateOne({ stationName: station.stationName },
-    { commodities: station.commodities, timestamp: station.timestamp });
+module.exports.updateOneUpsert = (data) => {
+  return Station.updateOne({ stationName: data.stationName },
+    { commodities: data.commodities, timestamp: data.timestamp }, {upsert: true}).exec();
 };

@@ -8,7 +8,7 @@ module.exports.setMessageEvent = (sock) => {
     const inflated = JSON.parse(zlib.inflateSync(topic));
     if(inflated.$schemaRef === 'https://eddn.edcd.io/schemas/commodity/3') {
       const message = inflated.message;
-      Station.update({ stationName: message.stationName }, message, { upsert: true });
+      Station.updateOneUpsert(message);
     }
   });
 };
