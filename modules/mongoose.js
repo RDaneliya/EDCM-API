@@ -22,6 +22,6 @@ connection.on('disconnected', () => {
   console.log('MongoDB disconnected!');
 });
 
-mongoose.connect(process.env.mongoLink, config.get('mongoose').options);
+mongoose.connect(process.env.MONGO_LINK, config.get('mongoose').options);
 
 module.exports = mongoose;
