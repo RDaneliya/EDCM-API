@@ -2,9 +2,9 @@
   "name": "ed-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
-    "start": "node app.js",
+    "start": "node src/app.js",
     "lint": "eslint --ignore-path .gitignore .",
     "fix-lint": "eslint --fix --ignore-path .gitignore .",
     "test": "mocha ./test/* --exit"
@@ -30,6 +30,7 @@
     "mquery": "^3.2.3"
   },
   "devDependencies": {
-    "eslint": "^7.8.1"
+    "eslint": "^7.8.1",
+    "mocha": "^8.2.1"
   }
 }
