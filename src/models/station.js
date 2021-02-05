@@ -1,5 +1,5 @@
 'use strict';
-const mongoose = require('./../modules/mongoose');
+const mongoose = require('../modules/mongoose');
 const Schema = mongoose.Schema;
 
 const schema = new Schema({
