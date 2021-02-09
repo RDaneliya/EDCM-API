@@ -5,4 +5,4 @@ RUN npm install
 COPY . .
 ENV MONGO_LINK=${MONGO_LINK}
 EXPOSE 9500
-CMD ["node", "app.js"]
+CMD ["npm", "start"]
