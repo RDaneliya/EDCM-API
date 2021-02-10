@@ -52,7 +52,9 @@ module.exports.save = (data) => {
 module.exports.updateOneUpsert = (data) => {
   return Station.updateOne(
       { stationName: data.stationName },
-      { commodities: data.commodities, timestamp: data.timestamp, systemName: data.systemName },
+      { commodities: data.commodities,
+        timestamp: data.timestamp,
+        systemName: data.systemName},
       {upsert: true})
       .exec();
 };
