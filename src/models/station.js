@@ -2,59 +2,51 @@
 const mongoose = require('../modules/mongoose');
 const Schema = mongoose.Schema;
 
-const schema = new Schema({
+const validators = {
+  validator: (field) => field != null
+};
+
+const commodity = new Schema({
+  name: {
+    type: String,
+    required: true
+  },
+  buyPrice: Number,
+  sellPrice: Number,
+  stock: Number,
+  demand: Number
+});
+
+const station = new Schema({
   commodities: [
-    {
-      buyPrice: Number,
-      demand: Number,
-      name: String,
-      sellPrice: Number,
-      stock: Number
-    }
+    commodity
   ],
   stationName: {
     type: String,
-    unique: true,
-    required: true
+    unique: false,
+    required: true,
+    validate: validators
   },
   systemName: {
     type: String,
     unique: false,
-    required: true
+    required: true,
+    validate: validators
   },
   timestamp: {
     type: String,
     unique: false,
-    required: true
+    required: true,
+    validate: validators
   }
-}, { timestamps: false });
+}, {timestamps: false});
 
-const Station = mongoose.model('Station', schema);
-
-module.exports.getAllStationsNames = () => {
-  return Station.find({}, { 'stationName': 1 });
-};
-
-module.exports.haveInfo = (stationName) => {
-  return Station.findOne({ stationName: stationName });
-};
-
-module.exports.save = (data) => {
-  const stationEntry = new Station({
-    commodities: data.commodities,
-    stationName: data.stationName,
-    systemName: data.systemName,
-    timestamp: data.timestamp
-  });
-  return stationEntry.save();
-};
+const Station = mongoose.model('Station', station);
 
 module.exports.updateOneUpsert = (data) => {
-  return Station.updateOne(
-      { stationName: data.stationName },
-      { commodities: data.commodities,
-        timestamp: data.timestamp,
-        systemName: data.systemName},
-      {upsert: true})
-      .exec();
+  const stationDoc = new Station(data);
+  stationDoc.validate()
+      .then(() => {
+        stationDoc.save();
+      });
 };
