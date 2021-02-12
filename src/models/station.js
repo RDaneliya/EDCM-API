@@ -45,8 +45,17 @@ const Station = mongoose.model('Station', station);
 
 module.exports.updateOneUpsert = (data) => {
   const stationDoc = new Station(data);
+  delete stationDoc._doc._id;
   stationDoc.validate()
       .then(() => {
-        stationDoc.save();
+        Station.updateOne({
+              stationName: stationDoc._doc.stationName
+            },
+            stationDoc,
+            {
+              upsert: true,
+              useFindAndModify: true
+            })
+            .exec();
       });
 };
