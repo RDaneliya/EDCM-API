@@ -2,9 +2,9 @@
   "name": "ed-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node app.js",
     "lint": "eslint --ignore-path .gitignore .",
     "fix-lint": "eslint --fix --ignore-path .gitignore .",
     "test": "mocha ./tests/* --exit"
@@ -24,10 +24,19 @@
     "console-stamp": "^3.0.0-rc4.3",
     "dotenv": "^8.2.0",
     "log4js": "^6.3.0",
-    "mongoose": "^5.10.2",
     "node-schedule": "^1.3.2",
     "zeromq": "^5.2.0",
-    "mquery": "^3.2.3"
+    "mquery": "^3.2.3",
+    "@graphql-tools/graphql-file-loader": "^6.2.7",
+    "@graphql-tools/load": "^6.2.5",
+    "cookie-parser": "~1.4.4",
+    "debug": "^2.6.9",
+    "express": "^4.16.4",
+    "express-graphql": "^0.12.0",
+    "graphql": "^15.5.0",
+    "graphql-tools": "^7.0.2",
+    "mongoose": "5.10.19",
+    "morgan": "^1.9.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

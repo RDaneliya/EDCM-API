@@ -42,6 +42,7 @@ const station = new Schema({
 }, {timestamps: false});
 
 const Station = mongoose.model('Station', station);
+module.exports = Station;
 
 module.exports.updateOneUpsert = (data) => {
   const stationDoc = new Station(data);

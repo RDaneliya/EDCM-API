@@ -1,0 +1,49 @@
+type Query{
+    station(stationName: String): Station
+    stations(count: Int): [Station]
+}
+
+"""
+Elite Dangerous station object
+"""
+type Station{
+    """
+    Station name
+    """
+    stationName: String!
+    """
+    Station's star system name
+    """
+    systemName: String!
+    """
+    List of demanded and stocked commodities
+    """
+    commodities: [Commodities]
+    """
+    Update date timestamp
+    """
+    timestamp: String
+}
+
+type Commodities{
+    """
+    Buy price at current station
+    """
+    buyPrice: Int
+    """
+    Demand at current station
+    """
+    demand: Int
+    """
+    Commodity name
+    """
+    name: String!
+    """
+    Sell price at current station
+    """
+    sellPrice: Int
+    """
+    Stock at current station
+    """
+    stock: Int
+}
