@@ -5,19 +5,63 @@ module.exports = {
     const queriedFields = info.fieldNodes[0].selectionSet.selections;
     const projection = formProjection(queriedFields);
 
-    return Station.findOne({stationName: args.stationName}, projection).then(res => {
-      return res._doc;
-    });
+    return Station.findOne({ stationName: args.stationName }, projection)
+      .then(res => {
+        return res._doc;
+      });
   },
+
   stations: (args, context, info) => {
     const queriedFields = info.fieldNodes[0].selectionSet.selections;
     const projection = formProjection(queriedFields);
 
-    return Station.find({}, projection).limit(args.count).then(res => {
-      return res.map(element => {
-        return element._doc;
+    return Station.find({}, projection)
+      .limit(args.count)
+      .then(res => {
+        return res.map(element => {
+          return element._doc;
+        });
       });
-    });
+  },
+
+  maxBuyPrice: (args, context, info) => {
+    return Station.findMaxBuyPrice(args.commodityName, args.limit)
+      .then(res => {
+        res.map(element => {
+          element.commodities = [element.commodities];
+        });
+        return res;
+      });
+  },
+
+  minBuyPrice: (args, context, info) => {
+    return Station.findMinBuyPrice(args.commodityName, args.limit)
+      .then(res => {
+        res.map(element => {
+          element.commodities = [element.commodities];
+        });
+        return res;
+      });
+  },
+
+  maxSellPrice: (args, context, info) => {
+    return Station.findMaxSellPrice(args.commodityName, args.limit)
+      .then(res => {
+        res.map(element => {
+          element.commodities = [element.commodities];
+        });
+        return res;
+      });
+  },
+
+  minSellPrice: (args, context, info) => {
+    return Station.findMinSellPrice(args.commodityName, args.limit)
+      .then(res => {
+        res.map(element => {
+          element.commodities = [element.commodities];
+        });
+        return res;
+      });
   }
 };
 
@@ -31,16 +75,16 @@ const formProjection = (queriedFields) => {
   };
   queriedFields.forEach(element => {
     switch (element.name.value) {
-      case "stationName":
+      case 'stationName':
         projection.stationName = 1;
         break;
-      case "systemName":
+      case 'systemName':
         projection.systemName = 1;
         break;
-      case "timestamp":
+      case 'timestamp':
         projection.timestamp = 1;
         break;
-      case "commodities":
+      case 'commodities':
         projection.commodities = 1;
         break;
     }

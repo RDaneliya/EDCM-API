@@ -1,6 +1,10 @@
 type Query{
     station(stationName: String): Station
     stations(count: Int): [Station]
+    maxBuyPrice(commodityName: String, limit: Int): [Station]
+    minBuyPrice(commodityName: String, limit: Int): [Station]
+    maxSellPrice(commodityName: String, limit: Int): [Station]
+    minSellPrice(commodityName: String, limit: Int): [Station]
 }
 
 """
