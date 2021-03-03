@@ -1,3 +1,4 @@
+require('console-stamp')(console);
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -7,7 +8,6 @@ const {loadSchemaSync} = require('@graphql-tools/load');
 const {GraphQLFileLoader} = require('@graphql-tools/graphql-file-loader');
 const root = require('./src/graphql/root')
 require('./src/sock')('tcp://eddn.edcd.io', 9500);
-require('console-stamp')(console);
 
 const schema = loadSchemaSync(path.join(__dirname, './src/graphql/schemas/schema.graphql'), {
   loaders: [new GraphQLFileLoader()]

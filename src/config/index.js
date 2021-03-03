@@ -9,6 +9,9 @@ config.set({
       'useUnifiedTopology': true,
       'useCreateIndex': true
     }
+  },
+  'commodity-names': {
+    'url': 'https://eddb.io/archive/v6/commodities.json'
   }
 });
 module.exports = config;
