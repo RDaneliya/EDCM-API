@@ -11,5 +11,8 @@ WORKDIR /usr/src/app
 COPY --from=node_build /usr/src/build /usr/src/app
 COPY . .
 ENV MONGO_LINK=${MONGO_LINK}
+ENV NODE_ENV=production
+ENV PORT=80
+EXPOSE 80
 EXPOSE 9500
 CMD ["npm", "start"]

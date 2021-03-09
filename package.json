@@ -4,10 +4,10 @@
   "description": "",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "node --require dotenv/config ./bin/www",
     "lint": "eslint --ignore-path .gitignore .",
     "fix-lint": "eslint --fix --ignore-path .gitignore .",
-    "test": "jest"
+    "test": "mocha ./tests/* --exit"
   },
   "repository": {
     "type": "git",
@@ -36,7 +36,8 @@
     "graphql": "^15.5.0",
     "graphql-tools": "^7.0.2",
     "mongoose": "5.10.19",
-    "morgan": "^1.9.1"
+    "morgan": "^1.9.1",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
     "chai": "^4.2.0",

@@ -17,10 +17,27 @@ const commodity = new Schema({
   demand: Number
 });
 
+const ecomomy = new Schema({
+  name: String,
+  proportion: Number
+});
+
 const station = new Schema({
-  commodities: [
-    commodity
-  ],
+  commodities: {
+    type: [
+      commodity
+    ]
+  },
+  economies: {
+    type: [
+      ecomomy
+    ]
+  },
+  prohibited: {
+    type: [
+      String
+    ]
+  },
   stationName: {
     type: String,
     unique: false,
@@ -34,7 +51,7 @@ const station = new Schema({
     validate: validators
   },
   timestamp: {
-    type: String,
+    type: Date,
     unique: false,
     required: true,
     validate: validators
