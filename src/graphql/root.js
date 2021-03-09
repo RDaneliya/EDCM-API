@@ -24,6 +24,7 @@ module.exports = {
       });
   },
 
+  // eslint-disable-next-line no-unused-vars
   maxBuyPriceStations: (args, context, info) => {
     return Station.findMaxBuyPrice(args.commodityName, args.limit)
       .then(res => {
@@ -34,6 +35,7 @@ module.exports = {
       });
   },
 
+  // eslint-disable-next-line no-unused-vars
   minBuyPriceStations: (args, context, info) => {
     return Station.findMinBuyPrice(args.commodityName, args.limit)
       .then(res => {
@@ -44,6 +46,7 @@ module.exports = {
       });
   },
 
+  // eslint-disable-next-line no-unused-vars
   maxSellPriceStations: (args, context, info) => {
     return Station.findMaxSellPrice(args.commodityName, args.limit)
       .then(res => {
@@ -54,6 +57,7 @@ module.exports = {
       });
   },
 
+  // eslint-disable-next-line no-unused-vars
   minSellPriceStations: (args, context, info) => {
     return Station.findMinSellPrice(args.commodityName, args.limit)
       .then(res => {
