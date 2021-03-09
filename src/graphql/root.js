@@ -24,7 +24,7 @@ module.exports = {
       });
   },
 
-  maxBuyPrice: (args, context, info) => {
+  maxBuyPriceStations: (args, context, info) => {
     return Station.findMaxBuyPrice(args.commodityName, args.limit)
       .then(res => {
         res.map(element => {
@@ -34,7 +34,7 @@ module.exports = {
       });
   },
 
-  minBuyPrice: (args, context, info) => {
+  minBuyPriceStations: (args, context, info) => {
     return Station.findMinBuyPrice(args.commodityName, args.limit)
       .then(res => {
         res.map(element => {
@@ -44,7 +44,7 @@ module.exports = {
       });
   },
 
-  maxSellPrice: (args, context, info) => {
+  maxSellPriceStations: (args, context, info) => {
     return Station.findMaxSellPrice(args.commodityName, args.limit)
       .then(res => {
         res.map(element => {
@@ -54,7 +54,7 @@ module.exports = {
       });
   },
 
-  minSellPrice: (args, context, info) => {
+  minSellPriceStations: (args, context, info) => {
     return Station.findMinSellPrice(args.commodityName, args.limit)
       .then(res => {
         res.map(element => {
