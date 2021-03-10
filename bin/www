@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+process.env['DEBUG'] = 'ed-commodities-api:*'
+
 /**
  * Module dependencies.
  */

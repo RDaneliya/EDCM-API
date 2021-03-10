@@ -6,8 +6,8 @@ const morgan = require('morgan');
 const {graphqlHTTP} = require('express-graphql');
 const {loadSchemaSync} = require('@graphql-tools/load');
 const {GraphQLFileLoader} = require('@graphql-tools/graphql-file-loader');
-const root = require('./src/graphql/root')
-require('./src/sock')('tcp://eddn.edcd.io', 9500);
+const root = require('./graphql/root')
+require('./sock')('tcp://eddn.edcd.io', 9500);
 
 const schema = loadSchemaSync(path.join(__dirname, './graphql/schemas/schema.graphql'), {
   loaders: [new GraphQLFileLoader()]
