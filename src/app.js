@@ -9,7 +9,7 @@ const {GraphQLFileLoader} = require('@graphql-tools/graphql-file-loader');
 const root = require('./src/graphql/root')
 require('./src/sock')('tcp://eddn.edcd.io', 9500);
 
-const schema = loadSchemaSync(path.join(__dirname, './src/graphql/schemas/schema.graphql'), {
+const schema = loadSchemaSync(path.join(__dirname, './graphql/schemas/schema.graphql'), {
   loaders: [new GraphQLFileLoader()]
 });
 
@@ -28,4 +28,3 @@ app.use('/graphql', graphqlHTTP({
 }))
 
 module.exports = app;
-

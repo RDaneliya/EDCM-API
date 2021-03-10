@@ -66,9 +66,7 @@ module.exports.updateOneUpsert = (data) => {
   delete stationDoc._doc._id;
   stationDoc.validate()
       .then(() => {
-        Station.updateOne({
-              stationName: stationDoc._doc.stationName
-            },
+        Station.updateOne({ stationName: stationDoc._doc.stationName },
             stationDoc,
             {
               upsert: true,
@@ -76,4 +74,137 @@ module.exports.updateOneUpsert = (data) => {
             })
             .exec();
       });
+};
+
+module.exports.findMaxBuyPrice = (commodityName, limit) => {
+  const pureName = removeSymbols(commodityName);
+  return Station.aggregate([
+    {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        }
+      }
+    }, {
+      '$unwind': {
+        'path': '$commodities',
+        'preserveNullAndEmptyArrays': false
+      }
+    }, {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        },
+        'commodities.buyPrice': {
+          '$gt': 0
+        }
+      }
+    }, {
+      '$sort': {
+        'commodities.buy': -1
+      }
+    }, {
+      '$limit': limit
+    }
+  ]);
+};
+
+module.exports.findMinBuyPrice = (commodityName, limit) => {
+  const pureName = removeSymbols(commodityName);
+  return Station.aggregate([
+    {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        }
+      }
+    }, {
+      '$unwind': {
+        'path': '$commodities',
+        'preserveNullAndEmptyArrays': false
+      }
+    }, {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        },
+        'commodities.buyPrice': {
+          '$gt': 0
+        }
+      }
+    }, {
+      '$sort': {
+        'commodities.buy': 1
+      }
+    }, {
+      '$limit': limit
+    }
+  ]);
+};
+
+module.exports.findMaxSellPrice = (commodityName, limit) => {
+  const pureName = removeSymbols(commodityName);
+  return Station.aggregate([
+    {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        }
+      }
+    }, {
+      '$unwind': {
+        'path': '$commodities',
+        'preserveNullAndEmptyArrays': false
+      }
+    }, {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        }
+      }
+    }, {
+      '$sort': {
+        'commodities.sellPrice': -1
+      }
+    }, {
+      '$limit': limit
+    }
+  ]);
+};
+
+module.exports.findMinSellPrice = (commodityName, limit) => {
+  const pureName = removeSymbols(commodityName);
+  return Station.aggregate([
+    {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        }
+      }
+    }, {
+      '$unwind': {
+        'path': '$commodities',
+        'preserveNullAndEmptyArrays': false
+      }
+    }, {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        },
+        'commodities.sellPrice': {
+          '$gt': 0
+        }
+      }
+    }, {
+      '$sort': {
+        'commodities.sellPrice': 1
+      }
+    }, {
+      '$limit': limit
+    }
+  ]);
+};
+
+const removeSymbols = (commodityName) => {
+  return commodityName.replace(/[^a-zA-Z\d\s]/g, '');
 };

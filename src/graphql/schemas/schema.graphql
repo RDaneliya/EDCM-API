@@ -1,6 +1,10 @@
 type Query{
     station(stationName: String): Station
     stations(count: Int): [Station]
+    maxBuyPriceStations(commodityName: String, limit: Int): [Station]
+    minBuyPriceStations(commodityName: String, limit: Int): [Station]
+    maxSellPriceStations(commodityName: String, limit: Int): [Station]
+    minSellPriceStations(commodityName: String, limit: Int): [Station]
 }
 
 """
@@ -18,14 +22,16 @@ type Station{
     """
     List of demanded and stocked commodities
     """
-    commodities: [Commodities]
+    commodities: [CommoditiesAtStation]
     """
     Update date timestamp
     """
-    timestamp: String
+    timestamp: DateTime
 }
 
-type Commodities{
+scalar DateTime
+
+type CommoditiesAtStation{
     """
     Buy price at current station
     """
