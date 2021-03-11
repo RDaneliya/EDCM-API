@@ -66,6 +66,10 @@ module.exports = {
         });
         return res;
       });
+  },
+
+  commodityInfo: (args, context, info) => {
+    return Station.getCommodityInfo(args.commodityName).then(res => res[0]);
   }
 };
 

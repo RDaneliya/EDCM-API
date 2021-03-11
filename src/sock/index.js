@@ -3,7 +3,7 @@ const zmq = require('zeromq');
 const sock = zmq.socket('sub');
 const Station = require('../models/station');
 const delowercase = require('../modules/delowercase');
-
+const debug = require('debug')('ed-commodities-api:server');
 
 module.exports = (address, port) => {
   delowercase.getCommoditiesMap()
@@ -29,17 +29,17 @@ module.exports = (address, port) => {
         });
 
         sock.on('disconnect', () => {
-          console.log('Disconnected, trying to reconnect');
+          debug('Disconnected, trying to reconnect');
           sock.connect(address);
         });
 
         sock.on('error', (error) => {
-          console.log(error);
+          debug(error);
           sock.disconnect();
         });
 
         sock.on('exit', () => {
-          console.log('Disconnected, trying to reconnect');
+          debug('Disconnected, trying to reconnect');
           sock.connect(address);
         });
       });

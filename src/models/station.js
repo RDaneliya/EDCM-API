@@ -65,15 +65,15 @@ module.exports.updateOneUpsert = (data) => {
   const stationDoc = new Station(data);
   delete stationDoc._doc._id;
   stationDoc.validate()
-      .then(() => {
-        Station.updateOne({ stationName: stationDoc._doc.stationName },
-            stationDoc,
-            {
-              upsert: true,
-              useFindAndModify: true
-            })
-            .exec();
-      });
+    .then(() => {
+      Station.updateOne({ stationName: stationDoc._doc.stationName },
+        stationDoc,
+        {
+          upsert: true,
+          useFindAndModify: true
+        })
+        .exec();
+    });
 };
 
 module.exports.findMaxBuyPrice = (commodityName, limit) => {
@@ -201,6 +201,82 @@ module.exports.findMinSellPrice = (commodityName, limit) => {
       }
     }, {
       '$limit': limit
+    }
+  ]);
+};
+
+module.exports.getCommodityInfo = (commodityName) => {
+  const pureName = removeSymbols(commodityName);
+  return  Station.aggregate([
+    {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        }
+      }
+    }, {
+      '$unwind': {
+        'path': '$commodities',
+        'preserveNullAndEmptyArrays': false
+      }
+    }, {
+      '$match': {
+        'commodities.name': {
+          '$regex': new RegExp(`^${pureName}$`, 'i')
+        }
+      }
+    }, {
+      '$project': {
+        'commodities': 1
+      }
+    }, {
+      '$group': {
+        '_id': '$commodities.name',
+        'commodities': {
+          '$push': {
+            'name': '$commodities.name',
+            'buyPrice': '$commodities.buyPrice',
+            'sellPrice': '$commodities.sellPrice',
+            'stock': '$commodities.stock',
+            'demand': '$commodities.demand'
+          }
+        }
+      }
+    }, {
+      '$project': {
+        'name': '$_id',
+        'maxBuyPrice': {
+          '$max': '$commodities.buyPrice'
+        },
+        'minBuyPrice': {
+          $ifNull: [
+            {
+              $min: {
+                $filter: {
+                  input: "$commodities.buyPrice",
+                  cond: { $gt: ["$$this", 0] }
+                }
+              }
+            },
+            0
+          ]
+        },
+        'maxSellPrice': {
+          '$max': '$commodities.sellPrice'
+        },
+        'minSellPrice': {
+          '$min': {
+            '$filter': {
+              'input': '$commodities.sellPrice',
+              'cond': {
+                '$gt': [
+                  '$$this', 0
+                ]
+              }
+            }
+          }
+        }
+      }
     }
   ]);
 };
