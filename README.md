@@ -6,5 +6,5 @@ This is graphql app for populating price data from [EDDN](https://github.com/EDC
   1. Clone this repo
   2. Run ```npm install```
   3. Put PORT and MONGO_LINK vars to .env file
-  4. Build docker container or run ```npm run```. 
+  4. Build docker container or run ```npm start```. 
 
