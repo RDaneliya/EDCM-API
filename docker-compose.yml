@@ -1,0 +1,46 @@
+version: '3.8'
+
+x-logging-rules: &logging-rules
+  logging:
+    driver: "json-file"
+    options:
+      max-size: 20m
+      max-file: "10"
+
+networks:
+  backend:
+    driver: bridge
+
+services:
+  api:
+    image: "vantys/edcm:latest"
+    container_name: api
+    depends_on:
+      - mongo
+    ports:
+      - 80:80
+    env_file:
+      - .env
+    restart: unless-stopped
+    networks:
+      - backend
+    command: npm start
+    <<: *logging-rules
+
+  mongo:
+    image: mongo:bionic
+    container_name: mongo
+    volumes:
+      - database:/mongo
+    command: [ "mongod", "--bind_ip_all" ]
+    networks:
+      - backend
+    ports:
+      - 27017:27017
+    restart: unless-stopped
+    <<: *logging-rules
+
+volumes:
+  database:
+    external: true
+    name: edcm-database
