@@ -1,4 +1,4 @@
-const config = require('../config');
+const config = require('../../config');
 const fetch = require('node-fetch');
 require('dotenv').config();
 const url = config.get('commodity-names').url;
