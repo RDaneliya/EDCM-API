@@ -105,7 +105,7 @@ module.exports.findMaxBuyPrice = (commodityName, limit) => {
       }
     }, {
       '$sort': {
-        'commodities.buy': -1
+        'commodities.buyPrice': -1
       }
     }, {
       '$limit': limit
@@ -138,7 +138,7 @@ module.exports.findMinBuyPrice = (commodityName, limit) => {
       }
     }, {
       '$sort': {
-        'commodities.buy': 1
+        'commodities.buyPrice': 1
       }
     }, {
       '$limit': limit

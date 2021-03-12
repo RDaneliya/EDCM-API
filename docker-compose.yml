@@ -13,7 +13,11 @@ networks:
 
 services:
   api:
-    image: "vantys/edcm:latest"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/api
     container_name: api
     depends_on:
       - mongo

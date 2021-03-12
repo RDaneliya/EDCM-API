@@ -1,11 +1,37 @@
 type Query{
+    """
+    Get info about specific station
+    """
     station(stationName: String): Station
-    stations(count: Int): [Station]
+
+    """
+    Get top stations by max buy price for the specific commodity
+    """
     maxBuyPriceStations(commodityName: String, limit: Int): [Station]
+
+    """
+    Get top stations by min buy price for the specific commodity
+    """
     minBuyPriceStations(commodityName: String, limit: Int): [Station]
+
+    """
+    Get top stations by max sell price for the specific commodity
+    """
     maxSellPriceStations(commodityName: String, limit: Int): [Station]
+
+    """
+    Get top stations by min sell price for the specific commodity
+    """
     minSellPriceStations(commodityName: String, limit: Int): [Station]
+
+    """
+    Get overview for the specific commodity (not rare commodity)
+    """
     commodityInfo(commodityName: String): GlobalCommodityInfo
+
+    """
+    Get overview for all commodities (not rare commodities)
+    """
     allCommoditiesInfo: [GlobalCommodityInfo]
 }
 
@@ -41,35 +67,59 @@ type CommoditiesAtStation{
     Buy price at current station
     """
     buyPrice: Int
+
     """
     Demand at current station
     """
     demand: Int
+
     """
     Commodity name
     """
     name: String!
+
     """
     Sell price at current station
     """
     sellPrice: Int
+
     """
     Stock at current station
     """
     stock: Int
+
+    """
+    Update date timestamp
+    """
+    timestamp: DateTime
 }
 
 """
 Global info about commodity
 """
 type GlobalCommodityInfo{
+    """
+    Commodity name
+    """
     name: String!
 
+    """
+    Max buy price
+    """
     maxBuyPrice: Int
 
+    """
+    Min buy price
+    """
     minBuyPrice: Int
 
+    """
+    Max sell price
+    """
     maxSellPrice: Int
 
+    """
+    Min sell price
+    """
     minSellPrice: Int
 }
