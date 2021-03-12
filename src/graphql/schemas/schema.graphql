@@ -5,6 +5,8 @@ type Query{
     minBuyPriceStations(commodityName: String, limit: Int): [Station]
     maxSellPriceStations(commodityName: String, limit: Int): [Station]
     minSellPriceStations(commodityName: String, limit: Int): [Station]
+    commodityInfo(commodityName: String): GlobalCommodityInfo
+    allCommoditiesInfo: [GlobalCommodityInfo]
 }
 
 """
@@ -31,6 +33,9 @@ type Station{
 
 scalar DateTime
 
+"""
+Info about commodity at station. (Not as global overview)
+"""
 type CommoditiesAtStation{
     """
     Buy price at current station
@@ -52,4 +57,19 @@ type CommoditiesAtStation{
     Stock at current station
     """
     stock: Int
+}
+
+"""
+Global info about commodity
+"""
+type GlobalCommodityInfo{
+    name: String!
+
+    maxBuyPrice: Int
+
+    minBuyPrice: Int
+
+    maxSellPrice: Int
+
+    minSellPrice: Int
 }

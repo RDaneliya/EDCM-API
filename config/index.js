@@ -11,7 +11,7 @@ config.set({
     }
   },
   'commodity-names': {
-    'url': 'https://eddb.io/archive/v6/commodities.json'
+    'url': 'https://raw.githubusercontent.com/EDCD/FDevIDs/master/commodity.csv'
   }
 });
 module.exports = config;

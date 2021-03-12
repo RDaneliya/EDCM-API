@@ -6,9 +6,9 @@ module.exports = {
     const projection = formProjection(queriedFields);
 
     return Station.findOne({ stationName: args.stationName }, projection)
-      .then(res => {
-        return res._doc;
-      });
+        .then(res => {
+          return res._doc;
+        });
   },
 
   stations: (args, context, info) => {
@@ -16,56 +16,60 @@ module.exports = {
     const projection = formProjection(queriedFields);
 
     return Station.find({}, projection)
-      .limit(args.count)
-      .then(res => {
-        return res.map(element => {
-          return element._doc;
+        .limit(args.count)
+        .then(res => {
+          return res.map(element => {
+            return element._doc;
+          });
         });
-      });
   },
 
-  // eslint-disable-next-line no-unused-vars
-  maxBuyPriceStations: (args, context, info) => {
+  maxBuyPriceStations: (args) => {
     return Station.findMaxBuyPrice(args.commodityName, args.limit)
-      .then(res => {
-        res.map(element => {
-          element.commodities = [element.commodities];
+        .then(res => {
+          res.map(element => {
+            element.commodities = [element.commodities];
+          });
+          return res;
         });
-        return res;
-      });
   },
 
-  // eslint-disable-next-line no-unused-vars
-  minBuyPriceStations: (args, context, info) => {
+  minBuyPriceStations: (args) => {
     return Station.findMinBuyPrice(args.commodityName, args.limit)
-      .then(res => {
-        res.map(element => {
-          element.commodities = [element.commodities];
+        .then(res => {
+          res.map(element => {
+            element.commodities = [element.commodities];
+          });
+          return res;
         });
-        return res;
-      });
   },
 
-  // eslint-disable-next-line no-unused-vars
-  maxSellPriceStations: (args, context, info) => {
+  maxSellPriceStations: (args) => {
     return Station.findMaxSellPrice(args.commodityName, args.limit)
-      .then(res => {
-        res.map(element => {
-          element.commodities = [element.commodities];
+        .then(res => {
+          res.map(element => {
+            element.commodities = [element.commodities];
+          });
+          return res;
         });
-        return res;
-      });
   },
 
-  // eslint-disable-next-line no-unused-vars
-  minSellPriceStations: (args, context, info) => {
+  minSellPriceStations: (args) => {
     return Station.findMinSellPrice(args.commodityName, args.limit)
-      .then(res => {
-        res.map(element => {
-          element.commodities = [element.commodities];
+        .then(res => {
+          res.map(element => {
+            element.commodities = [element.commodities];
+          });
+          return res;
         });
-        return res;
-      });
+  },
+
+  commodityInfo: (args) => {
+    return Station.getCommodityInfo(args.commodityName).then(res => res[0]);
+  },
+
+  allCommoditiesInfo: () => {
+    return Station.getAllCommoditiesInfo().then(res => res);
   }
 };
 
