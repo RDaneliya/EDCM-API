@@ -32,8 +32,12 @@ const loadCommodities = () => {
       });
 };
 
+const rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = [0, new schedule.Range(4,5)];
+rule.hour = 15;
+rule.minute = 0;
 // eslint-disable-next-line no-unused-vars
-const job = schedule.scheduleJob('* * * * * 5', () => {
+const job = schedule.scheduleJob(rule, () => {
   debug("Reloading commodities names")
   return loadCommodities();
 });
