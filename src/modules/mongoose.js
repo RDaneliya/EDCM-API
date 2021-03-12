@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const config = require('../config');
+const config = require('../../config');
 const debug = require('debug')('ed-commodities-api:server');
 require('dotenv').config();
 

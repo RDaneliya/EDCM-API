@@ -10,20 +10,21 @@ module.exports = (address, port) => {
       .then((commoditiesMap) => {
         sock.connect(`${address}:${port}`);
         sock.subscribe('');
-
         sock.on('message', topic => {
           const inflated = JSON.parse(zlib.inflateSync(topic));
           if (inflated.$schemaRef === 'https://eddn.edcd.io/schemas/commodity/3') {
             const message = inflated.message;
 
-            message.commodities.forEach(commodity => {
-              const commodityEntry = commoditiesMap.get(commodity.name);
+            message.commodities.forEach((commodity, index) => {
+              const commodityEntry = commoditiesMap.get(commodity.name.toLowerCase());
               if (commodityEntry != null) {
                 commodity.name = commodityEntry.name;
                 commodity.category = commodityEntry.category;
               }
+              else{
+                message.commodities.splice(index,1);
+              }
             });
-
             Station.updateOneUpsert(message);
           }
         });

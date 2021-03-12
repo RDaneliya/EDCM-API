@@ -2,22 +2,38 @@ const config = require('../../config');
 const fetch = require('node-fetch');
 require('dotenv').config();
 const url = config.get('commodity-names').url;
+const schedule = require('node-schedule');
+const debug = require('debug')('ed-commodities-api:server');
+
+const commoditiesMap = new Map();
 
 module.exports.getCommoditiesMap = () => {
-  return  fetch(url)
+  return loadCommodities();
+};
+
+const loadCommodities = () => {
+  commoditiesMap.clear();
+  return fetch(url)
       .then(res => res.text())
       .then(body => {
-        const commoditiesJSON = JSON.parse(body);
-        const commoditiesMap = new Map();
-
-        commoditiesJSON.forEach(element =>{
-          const lowercase = element.name.toLowerCase().replace(/ /g, '');
-          const commodityEntry = {
-            name: element.name,
-            category: element.category
+        const rows = body.split('\r\n').slice(1);
+        rows.forEach(row => {
+          if (row !== "") {
+            const elements = row.split(',');
+            const key = elements[1].toLowerCase();
+            const value = {
+              name: elements[3],
+              category: elements[2]
+            };
+            commoditiesMap.set(key, value);
           }
-          commoditiesMap.set(lowercase, commodityEntry)
-        })
+        });
         return commoditiesMap;
       });
 };
+
+// eslint-disable-next-line no-unused-vars
+const job = schedule.scheduleJob('* * * * * 5', () => {
+  debug("Reloading commodities names")
+  return loadCommodities();
+});
