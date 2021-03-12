@@ -17,7 +17,7 @@ services:
       context: .
       dockerfile: Dockerfile
     volumes:
-    - .:/api
+      - .:/api
     container_name: api
     depends_on:
       - mongo
