@@ -1,7 +1,9 @@
 # EDCM-API
 This is graphql app for populating price data from [EDDN](https://github.com/EDCD/EDDN) into mongodb database and querying it.
 
-#How to use it
+[GraphQL API](http://vm-javajun-edcm.development.com/graphql)
+
+# How to use it
 
 ## How to use this app without docker
   1. Clone this repo
