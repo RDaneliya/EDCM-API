@@ -31,11 +31,13 @@ services:
     command: npm start
     <<: *logging-rules
 
-  mongo:
-    image: mongo:bionic
+  mongo-dev:
+    build:
+      context: ./database
+      dockerfile: Dockerfile
     container_name: mongo
     volumes:
-      - database:/mongo
+      - .:/mongo
     command: [ "mongod", "--bind_ip_all" ]
     networks:
       - backend
@@ -43,8 +45,3 @@ services:
       - 27017:27017
     restart: unless-stopped
     <<: *logging-rules
-
-volumes:
-  database:
-    external: true
-    name: edcm-database
