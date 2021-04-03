@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 db.createUser({
   user: 'api',
   pwd: 'api',
@@ -6,6 +7,7 @@ db.createUser({
     db: 'EDCM'
   }]
 });
+// eslint-disable-next-line no-undef
 db.createCollection('stations', {
   capped: false,
   validator: {
