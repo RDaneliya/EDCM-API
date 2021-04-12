@@ -14,4 +14,5 @@ ENV NODE_ENV=production
 ENV PORT=80
 EXPOSE 80
 EXPOSE 9500
+EXPOSE 27017
 CMD ["npm", "start"]

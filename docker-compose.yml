@@ -23,6 +23,8 @@ services:
     container_name: api
     ports:
       - 80:80
+      - 9500:9500
+      - 27017:27017
     environment:
       PORT: 80
       MONGO_LINK: ${MONGO_LINK}
