@@ -1,0 +1,34 @@
+version: '3.8'
+
+x-logging-rules: &logging-rules
+  logging:
+    driver: "json-file"
+    options:
+      max-size: 20m
+      max-file: "10"
+
+networks:
+  edcm:
+    name: edcm
+    external: true
+    driver: bridge
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/api
+    container_name: api
+    ports:
+      - 80:80
+    environment:
+      PORT: 80
+      MONGO_LINK: ${MONGO_LINK}
+      NODE_ENV: "production"
+    restart: unless-stopped
+    networks:
+        - edcm
+    command: npm start
+    <<: *logging-rules
