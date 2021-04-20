@@ -10,6 +10,7 @@ module.exports = (address, port) => {
       .then((commoditiesMap) => {
         sock.connect(`${address}:${port}`);
         sock.subscribe('');
+
         sock.on('message', topic => {
           const inflated = JSON.parse(zlib.inflateSync(topic));
           if (inflated.$schemaRef === 'https://eddn.edcd.io/schemas/commodity/3') {

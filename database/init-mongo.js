@@ -30,7 +30,7 @@ db.createCollection('stations', {
           bsonType: 'array',
           items: {
             bsonType: 'object',
-            required: ['name', 'category'],
+            required: ['name'],
             description: 'Array of commodities at station',
             properties: {
               name: {
@@ -64,7 +64,6 @@ db.createCollection('stations', {
           bsonType: 'array',
           items: {
             bsonType: 'object',
-            required: ['name', 'proportion'],
             properties: {
               name: {
                 bsonType: 'string',
