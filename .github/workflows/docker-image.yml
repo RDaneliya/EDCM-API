@@ -24,11 +24,10 @@ jobs:
           repository: vantys/edcm
           tags: stable
       - name: Push to GitHub Packages
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v1
         with:
-          context: .
-          load: true
-          tags: edcm:stable
-      - name: Inspect
-        run: |
-          docker image inspect edcm:stable
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          registry: docker.pkg.github.com
+          repository: BANTYC/EDCM-API/edcm
+          tag_with_ref: true
