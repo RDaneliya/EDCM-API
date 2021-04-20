@@ -26,4 +26,9 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v2
         with:
-          tags: stable
+          context: .
+          load: true
+          tags: EDCM:stable
+      - name: Inspect
+        run: |
+          docker image inspect EDCM:stable
