@@ -29,5 +29,5 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_TOKEN }}
           registry: docker.pkg.github.com
-          repository: BANTYC/EDCM/EDCM-stable
+          repository: BANTYC/EDCM
           tags: vantys/edcm-stable
