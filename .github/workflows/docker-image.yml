@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          password: ${{ secrets.DOCKER_TOKEN }}
           registry: docker.pkg.github.com
           repository: BANTYC/EDCM/EDCM-stable
           tags: vantys/edcm-stable
