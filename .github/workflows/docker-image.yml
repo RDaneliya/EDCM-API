@@ -21,13 +21,13 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: my-docker-hub-namespace/my-docker-hub-repository
-          tag_with_ref: true
+          repository: vantys/edcm
+          tags: vantys/edcm-stable
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v1
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: my-org/my-repo/my-image
-          tag_with_ref: true
+          repository: BANTYC/EDCM/EDCM-stable
+          tags: vantys/edcm-stable
