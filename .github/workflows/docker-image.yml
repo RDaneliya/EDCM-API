@@ -28,7 +28,7 @@ jobs:
         with:
           context: .
           load: true
-          tags: EDCM:stable
+          tags: edcm:stable
       - name: Inspect
         run: |
           docker image inspect EDCM:stable
