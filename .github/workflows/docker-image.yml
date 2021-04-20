@@ -31,4 +31,4 @@ jobs:
           tags: edcm:stable
       - name: Inspect
         run: |
-          docker image inspect EDCM:stable
+          docker image inspect edcm:stable
