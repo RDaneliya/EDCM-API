@@ -24,10 +24,9 @@ jobs:
           repository: vantys/edcm
           tags: stable
       - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
+        uses: docker/build-push-action@v2
         with:
           username: ${{ github.actor }}
           password: ${{ secrets.DOCKER_TOKEN }}
           registry: docker.pkg.github.com
-          repository: BANTYC/EDCM-API
-          tags: vantys/edcm-stable
+          tags: stable
