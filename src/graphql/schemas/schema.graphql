@@ -106,20 +106,4 @@ type GlobalCommodityInfo{
     """
     Max buy price
     """
-    maxBuyPrice: Int
-
-    """
-    Min buy price
-    """
-    minBuyPrice: Int
-
-    """
-    Max sell price
-    """
-    maxSellPrice: Int
-
-    """
-    Min sell price
-    """
-    minSellPrice: Int
-}
+    maxBuyPrice: 
