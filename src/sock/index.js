@@ -13,11 +13,13 @@ module.exports = (address, port) => {
 
         sock.on('message', topic => {
           const inflated = JSON.parse(zlib.inflateSync(topic));
+
           if (inflated.$schemaRef === 'https://eddn.edcd.io/schemas/commodity/3') {
             const message = inflated.message;
 
             message.commodities.forEach((commodity, index) => {
               const commodityEntry = commoditiesMap.get(commodity.name.toLowerCase());
+
               if (commodityEntry != null) {
                 commodity.name = commodityEntry.name;
                 commodity.category = commodityEntry.category;
@@ -26,6 +28,7 @@ module.exports = (address, port) => {
                 message.commodities.splice(index,1);
               }
             });
+
             Station.updateOneUpsert(message);
           }
         });
