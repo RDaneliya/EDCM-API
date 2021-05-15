@@ -1,5 +1,4 @@
-'use strict';
-const Conf = require('conf');
+import Conf from 'conf';
 const config = new Conf();
 
 config.set({
@@ -14,4 +13,4 @@ config.set({
     'url': 'https://raw.githubusercontent.com/EDCD/FDevIDs/master/commodity.csv'
   }
 });
-module.exports = config;
+export default config;

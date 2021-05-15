@@ -1,6 +1,6 @@
-const Station = require('../models/station');
+import * as Station from '../models/station.mjs'
 
-module.exports = {
+export default {
   station: (args, context, info) => {
     const queriedFields = info.fieldNodes[0].selectionSet.selections;
     const projection = formProjection(queriedFields);

@@ -1,10 +1,6 @@
-'use strict';
-const mongoose = require('../modules/mongoose');
-const Schema = mongoose.Schema;
+import mongoose from '../modules/mongoose.mjs';
 
-const validators = {
-  validator: (field) => field != null
-};
+const Schema = mongoose.Schema;
 
 const commodity = new Schema({
   name: {
@@ -46,19 +42,16 @@ const station = new Schema({
     type: String,
     unique: false,
     required: true,
-    validate: validators
   },
   systemName: {
     type: String,
     unique: false,
     required: true,
-    validate: validators
   },
   timestamp: {
     type: Date,
     unique: false,
     required: true,
-    validate: validators
   }
 }, {
   collection: 'Stations',
@@ -66,24 +59,23 @@ const station = new Schema({
 });
 
 const Station = mongoose.model('Station', station);
-module.exports = Station;
 
-module.exports.updateOneUpsert = (data) => {
+const updateOneUpsert = (data) => {
   const stationDoc = new Station(data);
   delete stationDoc._doc._id;
   stationDoc.validate()
-    .then(() => {
-      Station.updateOne({ stationName: stationDoc._doc.stationName },
-        stationDoc,
-        {
-          upsert: true,
-          useFindAndModify: true
-        })
-        .exec();
-    });
+      .then(() => {
+        Station.updateOne({ stationName: stationDoc._doc.stationName },
+            stationDoc,
+            {
+              upsert: true,
+              useFindAndModify: true
+            })
+            .exec();
+      });
 };
 
-module.exports.findMaxBuyPrice = (commodityName, limit) => {
+const findMaxBuyPrice = (commodityName, limit) => {
   const pureName = removeSymbols(commodityName);
   return Station.aggregate([
     {
@@ -116,7 +108,7 @@ module.exports.findMaxBuyPrice = (commodityName, limit) => {
   ]);
 };
 
-module.exports.findMinBuyPrice = (commodityName, limit) => {
+const findMinBuyPrice = (commodityName, limit) => {
   const pureName = removeSymbols(commodityName);
   return Station.aggregate([
     {
@@ -149,7 +141,7 @@ module.exports.findMinBuyPrice = (commodityName, limit) => {
   ]);
 };
 
-module.exports.findMaxSellPrice = (commodityName, limit) => {
+const findMaxSellPrice = (commodityName, limit) => {
   const pureName = removeSymbols(commodityName);
   return Station.aggregate([
     {
@@ -179,7 +171,7 @@ module.exports.findMaxSellPrice = (commodityName, limit) => {
   ]);
 };
 
-module.exports.findMinSellPrice = (commodityName, limit) => {
+const findMinSellPrice = (commodityName, limit) => {
   const pureName = removeSymbols(commodityName);
   return Station.aggregate([
     {
@@ -212,7 +204,7 @@ module.exports.findMinSellPrice = (commodityName, limit) => {
   ]);
 };
 
-module.exports.getCommodityInfo = (commodityName) => {
+const getCommodityInfo = (commodityName) => {
   const pureName = removeSymbols(commodityName);
   return Station.aggregate([
     {
@@ -288,7 +280,7 @@ module.exports.getCommodityInfo = (commodityName) => {
   ]);
 };
 
-module.exports.getAllCommoditiesInfo = () => {
+const getAllCommoditiesInfo = () => {
   return Station.aggregate([
     {
       '$unwind': {
@@ -360,4 +352,15 @@ module.exports.getAllCommoditiesInfo = () => {
 
 const removeSymbols = (commodityName) => {
   return commodityName.replace(/[^a-zA-Z\d\s]/g, '');
+};
+
+export {
+  Station,
+  updateOneUpsert,
+  findMaxBuyPrice,
+  findMinBuyPrice,
+  findMaxSellPrice,
+  findMinSellPrice,
+  getCommodityInfo,
+  getAllCommoditiesInfo
 };

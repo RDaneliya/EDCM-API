@@ -1,14 +1,16 @@
 #!/usr/bin/env node
 
-process.env['DEBUG'] = 'ed-commodities-api:*'
+process.env['DEBUG'] = 'ed-commodities-api:*';
 
 /**
  * Module dependencies.
  */
 
-const app = require('../src/app');
-const debug = require('debug')('ed-commodities-api:server');
-const http = require('http');
+import app from '../src/app.mjs';
+import http from 'http';
+import Debug from 'debug';
+
+const debug = Debug('ed-commodities-api:mongoose');
 
 /**
  * Normalize a port into a number, string, or false.
@@ -28,7 +30,7 @@ const normalizePort = (val) => {
   }
 
   return false;
-}
+};
 
 /**
  * Get port from environment and store in Express.
