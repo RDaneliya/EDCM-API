@@ -9,7 +9,6 @@ import { Sock } from './sock/index.mjs';
 import path from 'path';
 
 
-console.log(import.meta.url);
 const currentPath = decodeURI(import.meta.url)
   .replace(/^file:\/\/\//, '');
 const graphqlSchemaPath = path.join(currentPath, '../graphql/schemas/schema.graphql');
