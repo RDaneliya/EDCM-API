@@ -1,12 +1,14 @@
-const zlib = require('zlib');
-const zmq = require('zeromq');
-const sock = zmq.socket('sub');
-const Station = require('../models/station');
-const delowercase = require('../modules/delowercase');
-const debug = require('debug')('ed-commodities-api:server');
+import zlib from 'zlib';
+import {socket} from 'zeromq';
+import * as Station from '../models/station.mjs'
+import delovercase from '../modules/delowercase.mjs';
+import Debug from 'debug';
 
-module.exports = (address, port) => {
-  delowercase.getCommoditiesMap()
+const debug = Debug('ed-commodities-api:socket');
+const sock = socket('sub');
+
+export const  Sock = (address, port) => {
+  delovercase()
       .then((commoditiesMap) => {
         sock.connect(`${address}:${port}`);
         sock.subscribe('');

@@ -1,7 +1,10 @@
-const mongoose = require('mongoose');
-const config = require('../../config');
-const debug = require('debug')('ed-commodities-api:server');
-require('dotenv').config();
+import mongoose from 'mongoose';
+import config from '../../config/index.mjs';
+import Debug from 'debug';
+import dotenv from 'dotenv';
+
+const debug = Debug('ed-commodities-api:mongoose');
+dotenv.config();
 
 const connection = mongoose.connection;
 
@@ -24,4 +27,4 @@ connection.on('disconnected', () => {
 
 mongoose.connect(process.env.MONGO_LINK, config.get('mongoose').options);
 
-module.exports = mongoose;
+export default mongoose;

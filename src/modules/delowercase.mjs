@@ -1,13 +1,13 @@
-const config = require('../../config');
-const fetch = require('node-fetch');
-require('dotenv').config();
-const url = config.get('commodity-names').url;
-const schedule = require('node-schedule');
-const debug = require('debug')('ed-commodities-api:server');
+import config from '../../config/index.mjs';
+import fetch from "node-fetch";
+import schedule from 'node-schedule';
+import Debug from 'debug';
 
+const url = config.get('commodity-names').url;
+const debug = Debug('ed-commodities-api:delowercase');
 const commoditiesMap = new Map();
 
-module.exports.getCommoditiesMap = () => {
+const getCommoditiesMap = () => {
   return loadCommodities();
 };
 
@@ -33,11 +33,13 @@ const loadCommodities = () => {
 };
 
 const rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = [0, new schedule.Range(4,5)];
+rule.dayOfWeek = [0, new schedule.Range(4, 5)];
 rule.hour = 15;
 rule.minute = 0;
 // eslint-disable-next-line no-unused-vars
 const job = schedule.scheduleJob(rule, () => {
-  debug("Reloading commodities names")
+  debug("Reloading commodities names");
   return loadCommodities();
 });
+
+export default getCommoditiesMap;

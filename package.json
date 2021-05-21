@@ -2,9 +2,11 @@
   "name": "ed-backend",
   "version": "1.0.0",
   "description": "",
-  "main": "src/app.js",
+  "main": "src/app.mjs",
+  "type": "module",
   "scripts": {
-    "start": "node --require dotenv/config ./bin/www",
+    "start": "node --require dotenv/config bin/www.mjs",
+    "start-debug": "DEBUG=ed-commodities-api node --require dotenv/config bin/www.mjs",
     "lint": "eslint --ignore-path .gitignore .",
     "fix-lint": "eslint --fix --ignore-path .gitignore .",
     "test": "mocha ./tests/* --exit"
