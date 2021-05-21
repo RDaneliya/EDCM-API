@@ -1,7 +1,5 @@
 #!/usr/bin/env node
 
-process.env['DEBUG'] = 'ed-commodities-api:*';
-
 /**
  * Module dependencies.
  */
@@ -10,7 +8,7 @@ import app from '../src/app.mjs';
 import http from 'http';
 import Debug from 'debug';
 
-const debug = Debug('ed-commodities-api:mongoose');
+const debug = Debug('ed-commodities-api:server');
 
 /**
  * Normalize a port into a number, string, or false.

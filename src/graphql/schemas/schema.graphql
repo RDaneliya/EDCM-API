@@ -1,8 +1,16 @@
+schema {
+    query: Query
+}
 type Query{
     """
     Get info about specific station
     """
     station(stationName: String): Station
+
+    """
+    Get info about all stations
+    """
+    stations: [Station]
 
     """
     Get top stations by max buy price for the specific commodity

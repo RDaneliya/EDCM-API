@@ -58,26 +58,31 @@ const station = new Schema({
   timestamps: false
 });
 
-const Station = mongoose.model('Station', station);
+const StationModel = mongoose.model('Station', station);
+
+const findOne = (query, projection) => {
+  return StationModel.findOne(query, projection);
+};
+
+const findAll = (query, projection) => {
+  return StationModel.find(query, projection);
+};
 
 const updateOneUpsert = (data) => {
-  const stationDoc = new Station(data);
+  const stationDoc = new StationModel(data);
   delete stationDoc._doc._id;
-  stationDoc.validate()
-      .then(() => {
-        Station.updateOne({ stationName: stationDoc._doc.stationName },
-            stationDoc,
-            {
-              upsert: true,
-              useFindAndModify: true
-            })
-            .exec();
-      });
+  StationModel.updateOne({ stationName: stationDoc._doc.stationName },
+      stationDoc,
+      {
+        upsert: true,
+        useFindAndModify: true
+      })
+      .exec();
 };
 
 const findMaxBuyPrice = (commodityName, limit) => {
   const pureName = removeSymbols(commodityName);
-  return Station.aggregate([
+  return StationModel.aggregate([
     {
       '$match': {
         'commodities.name': {
@@ -110,7 +115,7 @@ const findMaxBuyPrice = (commodityName, limit) => {
 
 const findMinBuyPrice = (commodityName, limit) => {
   const pureName = removeSymbols(commodityName);
-  return Station.aggregate([
+  return StationModel.aggregate([
     {
       '$match': {
         'commodities.name': {
@@ -143,7 +148,7 @@ const findMinBuyPrice = (commodityName, limit) => {
 
 const findMaxSellPrice = (commodityName, limit) => {
   const pureName = removeSymbols(commodityName);
-  return Station.aggregate([
+  return StationModel.aggregate([
     {
       '$match': {
         'commodities.name': {
@@ -173,7 +178,7 @@ const findMaxSellPrice = (commodityName, limit) => {
 
 const findMinSellPrice = (commodityName, limit) => {
   const pureName = removeSymbols(commodityName);
-  return Station.aggregate([
+  return StationModel.aggregate([
     {
       '$match': {
         'commodities.name': {
@@ -206,7 +211,7 @@ const findMinSellPrice = (commodityName, limit) => {
 
 const getCommodityInfo = (commodityName) => {
   const pureName = removeSymbols(commodityName);
-  return Station.aggregate([
+  return StationModel.aggregate([
     {
       '$match': {
         'commodities.name': {
@@ -281,7 +286,7 @@ const getCommodityInfo = (commodityName) => {
 };
 
 const getAllCommoditiesInfo = () => {
-  return Station.aggregate([
+  return StationModel.aggregate([
     {
       '$unwind': {
         'path': '$commodities',
@@ -350,12 +355,14 @@ const getAllCommoditiesInfo = () => {
   ]);
 };
 
+
 const removeSymbols = (commodityName) => {
   return commodityName.replace(/[^a-zA-Z\d\s]/g, '');
 };
 
 export {
-  Station,
+  findOne,
+  findAll,
   updateOneUpsert,
   findMaxBuyPrice,
   findMinBuyPrice,
