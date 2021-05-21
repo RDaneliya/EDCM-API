@@ -1,22 +1,20 @@
-const Station = require('../models/station');
+import * as Station from '../models/station.mjs';
 
-module.exports = {
+export default {
   station: (args, context, info) => {
     const queriedFields = info.fieldNodes[0].selectionSet.selections;
     const projection = formProjection(queriedFields);
 
-    return Station.findOne({ stationName: args.stationName }, projection)
-        .then(res => {
-          return res._doc;
-        });
+    return Station.findOne({stationName: args.stationName}, projection).then(res => {
+      return res._doc;
+    });
+
   },
 
   stations: (args, context, info) => {
     const queriedFields = info.fieldNodes[0].selectionSet.selections;
     const projection = formProjection(queriedFields);
-
-    return Station.find({}, projection)
-        .limit(args.count)
+    return Station.findAll({}, projection)
         .then(res => {
           return res.map(element => {
             return element._doc;
