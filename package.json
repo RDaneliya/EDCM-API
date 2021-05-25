@@ -24,7 +24,7 @@
   "dependencies": {
     "@graphql-tools/graphql-file-loader": "^6.2.7",
     "@graphql-tools/load": "^6.2.7",
-    "conf": "^7.1.2",
+    "conf": "^10.0.1",
     "cookie-parser": "~1.4.4",
     "debug": "^2.6.9",
     "dotenv": "^8.2.0",
