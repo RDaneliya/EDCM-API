@@ -9,7 +9,7 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "daily"
-    target_branch: "master"
+    target_branch: ["master", "dev"]
     versioning-strategy: increase-if-necessary
     reviewers:
       - "BANTYC"
